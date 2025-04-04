@@ -1002,7 +1002,7 @@ mod tests {
 
         // wrong number of args
         match from_str::<Xy>(r#"[10]"#) {
-            Err(super::Error::Custom(_)) => {}
+            Err(super::Error::Custom) => {}
             _ => panic!("expect custom error"),
         }
         assert_eq!(

@@ -1,4 +1,4 @@
-use alloc::string::{String, ToString};
+
 
 use serde::de;
 
@@ -79,14 +79,14 @@ pub enum Error {
     RecursionLimitExceeded,
 
     /// Custom error message from serde
-    Custom(String),
+    Custom,
 }
 
 impl de::StdError for Error {}
 
 impl de::Error for Error {
-    fn custom<T: core::fmt::Display>(msg: T) -> Self {
-        Error::Custom(msg.to_string())
+    fn custom<T: core::fmt::Display>(_msg: T) -> Self {
+        Error::Custom
     }
 }
 
@@ -132,7 +132,7 @@ impl core::fmt::Display for Error {
                 }
                 Error::TrailingComma => "JSON has a comma after the last value in an array or map.",
                 Error::RecursionLimitExceeded => "JSON is nested too deeply, exceeded the recursion limit.",
-                Error::Custom(msg) => msg,
+                Error::Custom => "Custom error from serde was discarded to avoid float inclusion",
             }
         )
     }
